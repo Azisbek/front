@@ -24,11 +24,11 @@ export function PartnersSection({ partnersData }: PartnersSectionProps) {
         <AnimatedSection>
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
-              Партнеры и клиенты
+              Партнеры
             </h2>
-            <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+            {/* <p className="text-xl text-slate-600 max-w-2xl mx-auto">
               Нам доверяют ведущие мировые компании и организации
-            </p>
+            </p> */}
           </div>
         </AnimatedSection>
 
@@ -73,7 +73,7 @@ export function PartnersSection({ partnersData }: PartnersSectionProps) {
           </div>
         </AnimatedSection>
 
-        <AnimatedSection delay={0.2}>
+        {/* <AnimatedSection delay={0.2}>
           <div>
             <div className="flex items-center justify-center mb-8">
               <div className="h-px bg-slate-300 flex-1 max-w-xs" />
@@ -112,13 +112,13 @@ export function PartnersSection({ partnersData }: PartnersSectionProps) {
               ))}
             </div>
           </div>
-        </AnimatedSection>
+        </AnimatedSection> */}
 
-        <AnimatedSection delay={0.3}>
+        {/* <AnimatedSection delay={0.3}>
           <div className="mt-16 text-center">
             <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 bg-white rounded-2xl px-6 md:px-12 py-6 md:py-8 shadow-lg border border-slate-200">
               <div className="text-center">
-                <div className="text-4xl font-bold text-blue-600 mb-2">500+</div>
+                <div className="text-4xl font-bold text-blue-600 mb-2">10+</div>
                 <div className="text-sm text-slate-600 font-medium">Успешных проектов</div>
               </div>
               <div className="w-12 h-px md:w-px md:h-12 bg-slate-300" />
@@ -133,7 +133,7 @@ export function PartnersSection({ partnersData }: PartnersSectionProps) {
               </div>
             </div>
           </div>
-        </AnimatedSection>
+        </AnimatedSection> */}
       </div>
     </section>
   );
