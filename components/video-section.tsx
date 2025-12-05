@@ -119,22 +119,25 @@ export function VideoSection() {
               <div className="relative">
                 <Quote className="absolute -top-2 -left-2 w-8 h-8 text-primary/20" />
                 <blockquote className="text-2xl lg:text-3xl font-serif italic text-foreground leading-relaxed pl-6">
-                  "Наша цель — не просто предоставить юридические услуги, а
-                  стать надежным партнером в достижении ваших бизнес-целей"
+                  Создавая консалтинговую компанию ICP (Investment Consulting
+                  Projects) мы хотели внести свой вклад в создание и развитие
+                  счастливых и многогранно реализованных лидеров в Кыргызстане
+                  через партнерство и глубокого уровня поддержку, экспертность и
+                  стратегичность, опережая изменчивость мира
                 </blockquote>
               </div>
 
               {/* Author Info */}
               <div className="flex items-center gap-4 pl-6">
                 <div className="w-16 h-16 bg-gradient-to-br from-primary to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
-                  <span className="text-2xl font-bold text-white">К</span>
+                  <span className="text-2xl font-bold text-white">A</span>
                 </div>
                 <div>
                   <h4 className="text-xl font-heading font-bold text-foreground">
-                    Красов
+                    Айнура Чекирова
                   </h4>
                   <p className="text-muted-foreground font-medium">
-                    Основатель и управляющий партнер
+                    Соучредитель и управляющий партнер
                   </p>
                 </div>
               </div>
@@ -144,7 +147,7 @@ export function VideoSection() {
                 <div className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-primary rounded-full mt-3 flex-shrink-0" />
                   <p className="text-lg text-muted-foreground leading-relaxed">
-                    <strong className="text-foreground">15+ лет опыта</strong> в
+                    <strong className="text-foreground">30+ лет опыта</strong> в
                     сфере инвестиционного права и корпоративных финансов
                   </p>
                 </div>
@@ -163,7 +166,7 @@ export function VideoSection() {
                     <strong className="text-foreground">
                       Международная практика
                     </strong>{" "}
-                    работы с зарубежными инвесторами и фондами
+                    работы с внутренними и зарубежными инвестиционными группами
                   </p>
                 </div>
               </div>
