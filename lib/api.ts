@@ -1,6 +1,7 @@
 // API клиент для взаимодействия с Django бэкендом
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "https://icpexecutive.com/api";
 
 // Типы данных, соответствующие Django моделям
 export interface HeroSection {
@@ -128,19 +129,22 @@ class ApiClient {
   constructor(baseUrl: string = API_BASE_URL) {
     this.baseUrl = baseUrl;
     // Получаем базовый URL бэкенда (без /api)
-    this.backendBaseUrl = baseUrl.replace('/api', '');
+    this.backendBaseUrl = baseUrl.replace("/api", "");
   }
 
-  private async request<T>(endpoint: string, options?: RequestInit): Promise<T> {
+  private async request<T>(
+    endpoint: string,
+    options?: RequestInit
+  ): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`;
-    
+
     try {
       const response = await fetch(url, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           ...options?.headers,
         },
-        cache: 'no-store', // Отключаем кеширование для получения свежих данных
+        cache: "no-store", // Отключаем кеширование для получения свежих данных
         ...options,
       });
 
@@ -150,7 +154,8 @@ class ApiClient {
         try {
           const errorData = await response.json();
           if (errorData.detail || errorData.message || errorData.error) {
-            errorMessage = errorData.detail || errorData.message || errorData.error;
+            errorMessage =
+              errorData.detail || errorData.message || errorData.error;
           }
         } catch (e) {
           // Если не удалось распарсить JSON, используем стандартное сообщение
@@ -160,10 +165,10 @@ class ApiClient {
 
       return response.json();
     } catch (error) {
-      console.error('API Request Error:', {
+      console.error("API Request Error:", {
         url,
-        method: options?.method || 'GET',
-        error: error instanceof Error ? error.message : String(error)
+        method: options?.method || "GET",
+        error: error instanceof Error ? error.message : String(error),
       });
       throw error;
     }
@@ -171,8 +176,8 @@ class ApiClient {
 
   // Утилита для получения полного URL изображения
   getImageUrl(imagePath: string | undefined | null): string {
-    if (!imagePath) return '';
-    if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+    if (!imagePath) return "";
+    if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
       return imagePath;
     }
     return `${this.backendBaseUrl}${imagePath}`;
@@ -180,52 +185,57 @@ class ApiClient {
 
   // Получение всех данных сайта одним запросом
   async getWebsiteData(): Promise<WebsiteData> {
-    return this.request<WebsiteData>('/website-data/');
+    return this.request<WebsiteData>("/website-data/");
   }
 
   // Отдельные эндпоинты
   async getHeroSections(): Promise<HeroSection[]> {
-    return this.request<HeroSection[]>('/hero/');
+    return this.request<HeroSection[]>("/hero/");
   }
 
   async getAboutSection(): Promise<AboutSection> {
-    return this.request<AboutSection>('/about/');
+    return this.request<AboutSection>("/about/");
   }
 
   async getPartners(): Promise<Partner[]> {
-    return this.request<Partner[]>('/partners/');
+    return this.request<Partner[]>("/partners/");
   }
 
   async getTeam(): Promise<TeamMember[]> {
-    return this.request<TeamMember[]>('/team/');
+    return this.request<TeamMember[]>("/team/");
   }
 
   async getServices(): Promise<Service[]> {
-    return this.request<Service[]>('/services/');
+    return this.request<Service[]>("/services/");
   }
 
   async getFeaturedServices(): Promise<Service[]> {
-    return this.request<Service[]>('/services/featured/');
+    return this.request<Service[]>("/services/featured/");
   }
 
   async getInsightCategories(): Promise<InsightCategory[]> {
-    return this.request<InsightCategory[]>('/insights/categories/');
+    return this.request<InsightCategory[]>("/insights/categories/");
   }
 
   async getInsightTags(): Promise<string[]> {
-    const response = await this.request<{ tags: string[] }>('/insights/tags/');
+    const response = await this.request<{ tags: string[] }>("/insights/tags/");
     return response.tags;
   }
 
-  async getInsights(params?: { category?: string; tag?: string; search?: string; featured?: boolean }): Promise<Insight[]> {
+  async getInsights(params?: {
+    category?: string;
+    tag?: string;
+    search?: string;
+    featured?: boolean;
+  }): Promise<Insight[]> {
     const searchParams = new URLSearchParams();
-    if (params?.category) searchParams.append('category', params.category);
-    if (params?.tag) searchParams.append('tag', params.tag);
-    if (params?.search) searchParams.append('search', params.search);
-    if (params?.featured) searchParams.append('featured', 'true');
-    
+    if (params?.category) searchParams.append("category", params.category);
+    if (params?.tag) searchParams.append("tag", params.tag);
+    if (params?.search) searchParams.append("search", params.search);
+    if (params?.featured) searchParams.append("featured", "true");
+
     const query = searchParams.toString();
-    return this.request<Insight[]>(`/insights/${query ? `?${query}` : ''}`);
+    return this.request<Insight[]>(`/insights/${query ? `?${query}` : ""}`);
   }
 
   async getInsightBySlug(slug: string): Promise<Insight> {
@@ -233,20 +243,22 @@ class ApiClient {
   }
 
   async getContactInfo(): Promise<ContactInfo> {
-    return this.request<ContactInfo>('/contact/');
+    return this.request<ContactInfo>("/contact/");
   }
 
   // Отправка сообщений
   async sendContactMessage(data: ContactMessage): Promise<{ message: string }> {
-    return this.request<{ message: string }>('/contact/message/', {
-      method: 'POST',
+    return this.request<{ message: string }>("/contact/message/", {
+      method: "POST",
       body: JSON.stringify(data),
     });
   }
 
-  async sendApplicationForm(data: ApplicationForm): Promise<{ message: string; id: number }> {
-    return this.request<{ message: string; id: number }>('/application/', {
-      method: 'POST',
+  async sendApplicationForm(
+    data: ApplicationForm
+  ): Promise<{ message: string; id: number }> {
+    return this.request<{ message: string; id: number }>("/application/", {
+      method: "POST",
       body: JSON.stringify(data),
     });
   }
@@ -265,17 +277,20 @@ export const mapServiceToFrontendFormat = (service: Service) => ({
   id: service.id.toString(),
   title: service.title,
   description: service.description,
-  icon: 'Scale', // Можно добавить маппинг иконок
+  icon: "Scale", // Можно добавить маппинг иконок
   benefits: service.features_list || [],
 });
 
 // Утилита для получения полного URL изображения
-const getImageUrl = (imagePath: string | undefined | null, fallback: string): string => {
+const getImageUrl = (
+  imagePath: string | undefined | null,
+  fallback: string
+): string => {
   if (!imagePath) return fallback;
-  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+  if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
     return imagePath;
   }
-  const backendBaseUrl = API_BASE_URL.replace('/api', '');
+  const backendBaseUrl = API_BASE_URL.replace("/api", "");
   return `${backendBaseUrl}${imagePath}`;
 };
 
@@ -284,10 +299,13 @@ export const mapTeamMemberToFrontendFormat = (member: TeamMember) => {
     id: member.id.toString(),
     name: member.name,
     role: member.position,
-    bio: member.bio || '',
+    bio: member.bio || "",
     expertise: [], // Можно добавить поле expertise в Django модель
     linkedin: member.linkedin,
-    image: getImageUrl(member.photo, 'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=800'),
+    image: getImageUrl(
+      member.photo,
+      "https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=800"
+    ),
   };
 };
 
@@ -295,8 +313,8 @@ export const mapPartnerToFrontendFormat = (partner: Partner) => {
   return {
     id: partner.id.toString(),
     name: partner.name,
-    logo: getImageUrl(partner.logo, 'https://via.placeholder.com/200x100'),
-    category: 'partner' as const,
+    logo: getImageUrl(partner.logo, "https://via.placeholder.com/200x100"),
+    category: "partner" as const,
   };
 };
 
@@ -306,9 +324,12 @@ export const mapInsightToFrontendFormat = (insight: Insight) => {
     slug: insight.slug,
     title: insight.title,
     excerpt: insight.excerpt,
-    date: insight.published_date.split('T')[0], // Преобразуем ISO дату в YYYY-MM-DD
+    date: insight.published_date.split("T")[0], // Преобразуем ISO дату в YYYY-MM-DD
     tags: insight.tags || [insight.category.name], // Используем теги с бэкенда или категорию как fallback
-    image: getImageUrl(insight.featured_image, 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1200'),
+    image: getImageUrl(
+      insight.featured_image,
+      "https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1200"
+    ),
   };
 };
 
@@ -317,15 +338,19 @@ export const mapArticleToFrontendFormat = (insight: Insight) => ({
   slug: insight.slug,
   title: insight.title,
   excerpt: insight.excerpt,
-  content: insight.content || '',
-  date: insight.published_date.split('T')[0],
+  content: insight.content || "",
+  date: insight.published_date.split("T")[0],
   readTime: Math.ceil((insight.content?.length || 0) / 1000), // Примерная оценка времени чтения
   tags: insight.tags || [],
-  image: getImageUrl(insight.featured_image, 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1200'),
+  image: getImageUrl(
+    insight.featured_image,
+    "https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1200"
+  ),
   author: {
     name: insight.author,
-    role: 'Консультант',
-    avatar: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=400',
+    role: "Консультант",
+    avatar:
+      "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=400",
   },
   category: insight.category.name,
   featured: insight.is_featured,
