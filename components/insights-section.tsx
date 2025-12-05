@@ -119,6 +119,7 @@ export function InsightsSection({ insightsData }: InsightsSectionProps) {
                         className="w-full justify-between bg-blue-600 text-white hover:bg-blue-700 hover:shadow-xl hover:scale-105 transition-all duration-300 group/btn"
                         onClick={() =>
                           (window.location.href = `/articles/${
+			    // @ts-ignore
                             insight?.slug || insight.id
                           }`)
                         }
